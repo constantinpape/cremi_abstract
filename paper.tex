@@ -205,10 +205,27 @@ Nasim, plz short write-up here.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Watershed on Distancetransform}\label{sec:wsdt}
 
+To reduce the problem size for the subsequent processing step and calculate expressive features, we generate an over-segmentation of the raw data.
+These segments are calculated in each slice individually and then stacked along the z-axis, to avoid under-segmentation caused by the anisotropy.
+Here, we rely on a watershed algorithm \cite{couprie1997topological}.
+We generate seeds on the local maxima of the distance transform of the membrane probabilities and 
+use the smoothed probability map as heightmap for the watersheds.
+This approach closes holes in the membranes, while producing large segments and recovering small processes.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lifted Multicut}\label{sec:lmc}
+
+We obtain the neurite segmentation by merging the over-segmentation with the Lifted Multicut.
+This graph partitioning algorithm was introduced in \cite{andres2015lifting} is used to improve the Multicut based neurite segmentation introduced in \cite{andres2012globally}.
+
+For this, we represent the over-segmentation as region adjacency graph. We extend this graph with the so-called lifted edges, that connect all nodes within a certain distance \footnote{For the CREMI Experiments, we use graph-distance three.} in the original graph.
+
+The segmentation is then obtained by minimizing the Lifted Multicut objective (cf. \cite{keuper2015efficient}).
+For this we need costs for the local and lifted edges, that are derived from pseudo-probabilities by a Random Forest learned on the training set.
+Here, we use different Random Forests for the local and lifted edges.
+For the local edges, we use features from accumulating convolutional filter responses of raw data and membrane probabilities over the edge pixels, from calculating region statistics for the segments and features based on the topology of the edges.
+For the lifted edges, we also use region statistics and in addition features derived from merging the segments in a dendogram.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
