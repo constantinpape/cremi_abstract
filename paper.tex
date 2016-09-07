@@ -143,7 +143,7 @@ pdfstartview=Fit
 %\titlerunning{Short Title}
 
 %Single insitute
-\author{Constantin Pape \and Nasim Rahaman \and Thorsten Beier \and Anna Kreshuk}
+\author{Image Analysis and Learning}
 %If there are too many authors, use \authorrunning
 %\authorrunning{First Author et al.}
 \institute{University of Heidelberg}
@@ -199,7 +199,7 @@ Finally, this over-segmentation is merged into the tentative neurite segmentatio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{CNN}\label{sec:cnn}
 
-Nasim, plz short write-up here.
+The network used incorporates multiple \emph{Cantor modules}. A Cantor module comprises four parallel pathways operating at different resolutions. The highest resolution pathway uses large convolutional filters on full resolution images, and therefore is relatively shallow and narrow. The lowest resolution pathway are made wide and deep, owing to the reduced memory footprint per layer. Additionally, every layer at a given pathway (except for the lowest resolution pathway - in which case every second layer) receives input from the preceeding layers and sends its output to the subsequent layers in the neighboring two pathways. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
